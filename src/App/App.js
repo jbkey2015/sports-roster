@@ -5,6 +5,7 @@ import firebaseConnection from '../helpers/data/connection';
 import './App.scss';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
 import Auth from '../components/Auth/Auth';
+import PlayerContainer from '../components/PlayerContainer/PlayerContainer';
 
 
 firebaseConnection();
@@ -35,7 +36,7 @@ class App extends React.Component {
       <div className="App">
         <MyNavbar authed={authed}/>
         {
-        (authed) ? (<div>You loggine in</div>) : (<Auth />)
+        (authed) ? (<PlayerContainer/>) : (<Auth />)
         }
       </div>
     );
