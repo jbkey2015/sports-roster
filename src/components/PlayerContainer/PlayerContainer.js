@@ -7,6 +7,9 @@ import PlayerForm from '../PlayerForm/PlayerForm';
 class PlayerContainer extends React.Component {
   state = {
     players: [],
+    editMode: false,
+    playerToEdit: {},
+    showPlayerForm: false,
   }
 
   getPlayers = () => {
@@ -22,8 +25,34 @@ class PlayerContainer extends React.Component {
     playerData.addNewPlayer(newPlayer)
       .then(() => {
         this.getPlayers(uid);
+        this.setState({ showPlayerForm: false });
       })
       .catch((error) => console.error(error));
+  }
+
+  updateCurrentPlayer = (playerId, updatedInfo) => {
+    playerData.updatePlayer(playerId, updatedInfo)
+      .then(() => {
+        this.getPlayers(authData.getUid);
+        this.setState({ editMode: false, showPlayerForm: false });
+      })
+      .catch((errorFromUpdatePin) => console.error(errorFromUpdatePin));
+  }
+
+  setShowPlayerForm = () => {
+    this.setState({ showPlayerForm: true });
+  }
+
+  setHidePlayerForm = () => {
+    this.setState({ showPlayerForm: false, editMode: false });
+  }
+
+  setEditMode = () => {
+    this.setState({ editMode: true, showPlayerForm: true });
+  }
+
+  setPlayerToEdit = (player) => {
+    this.setState({ playerToEdit: player });
   }
 
   deleteSinglePlayer = (playerId) => {
@@ -41,11 +70,12 @@ class PlayerContainer extends React.Component {
   render() {
     return (
       <div>
-      <PlayerForm addPlayer={this.addPlayer} />
-        <div className="d-flex flex-wrap justify-content-between">
-          {this.state.players.map((player) => (<PlayerCard key={player.id} player={player} deleteSinglePlayer={this.deleteSinglePlayer} />))}
-        </div>
-    </div>
+      <button className="btn btn-primary" onClick={this.setShowPlayerForm}>Add a new player</button>
+      { this.state.showPlayerForm && <PlayerForm addPlayer={this.addPlayer} editMode={this.state.editMode} playerToEdit={this.state.playerToEdit} updateCurrentPlayer={this.updateCurrentPlayer} setHidePlayerForm={this.setHidePlayerForm} /> }
+      <div className="d-flex flex-wrap justify-content-center" id="playersContainer">
+        { this.state.players.map((player) => (<PlayerCard key={player.id} player={player} deleteSinglePlayer={this.deleteSinglePlayer} addPlayer={this.addPlayer} setEditMode={this.setEditMode} setPlayerToEdit={this.setPlayerToEdit} />))}
+      </div>
+      </div>
     );
   }
 }
