@@ -1,17 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import authData from '../../helpers/data/authData';
+import playerShape from '../../helpers/propz/playerShape';
 
 
 class PlayerForm extends React.Component {
   static propTypes = {
     addPlayer: PropTypes.func,
+    playerToEdit: playerShape.playerShape,
+    editMode: PropTypes.bool,
+    updatePlayer: PropTypes.func,
+    setHidePlayerForm: PropTypes.func,
   }
 
   state = {
     playerName: '',
     playerPosition: '',
     playerImage: '',
+  }
+
+  componentDidMount() {
+    const { playerToEdit, editMode } = this.props;
+    if (editMode) {
+      this.setState({ playerName: playerToEdit.name, playerImageUrl: playerToEdit.imageUrl, playerPosition: playerToEdit.position });
+    }
+  }
+
+  updatePlayerEvent = (e) => {
+    e.preventDefault();
+    const { updateCurrentPlayer, playerToEdit } = this.props;
+    const updatedPlayer = {
+      name: this.state.playerName,
+      imageUrl: this.state.playerImageUrl,
+      position: this.state.playerPosition,
+      uid: authData.getUid(),
+    };
+    updateCurrentPlayer(playerToEdit.id, updatedPlayer);
   }
 
   addPlayerEvent = (e) => {
@@ -44,6 +68,7 @@ class PlayerForm extends React.Component {
 
   render() {
     const { playerName, playerImage, playerPosition } = this.state;
+    const { editMode } = this.props;
     return (
       <div>
       <form className='PlayerForm col-6 offset-3'>
@@ -67,9 +92,10 @@ class PlayerForm extends React.Component {
           type="text" className="form-control" id="playerPosition" placeholder="Enter position" value= {playerPosition}
           onChange={this.positionChange} />
         </div>
-        <div>
-          <button className="btn btn-primary" onClick={this.addPlayerEvent}>Add Player</button>
-        </div>
+        {
+          (editMode) ? (<button className="btn btn-warning" onClick={this.updatePlayerEvent}>Update Player</button>)
+            : (<button className="btn btn-secondary" onClick={this.addPlayerEvent}>Save Player</button>)
+        }
       </form>
     </div>
     );
