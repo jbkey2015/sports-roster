@@ -2,21 +2,26 @@ import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseConnection from '../helpers/data/connection';
-import './App.scss';
-import MyNavbar from '../components/MyNavbar/MyNavbar';
 import Auth from '../components/Auth/Auth';
-
+import MyNavbar from '../components/MyNavbar/MyNavbar';
+import PlayerContainer from '../components/PlayerContainer/PlayerContainer';
+import playerData from '../helpers/data/playerData';
+import './App.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 firebaseConnection();
 
 class App extends React.Component {
   state = {
     authed: false,
+    players: [],
   }
 
   componentDidMount() {
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        const players = playerData.getPlayersByUid();
+        this.setState({ players });
         this.setState({ authed: true });
       } else {
         this.setState({ authed: false });
@@ -28,16 +33,24 @@ class App extends React.Component {
     this.removeListener();
   }
 
-  render() {
+  renderView = () => {
     const { authed } = this.state;
 
+    if (!authed) {
+      return (< Auth />);
+    }
+    return (< PlayerContainer />);
+  }
+
+  render() {
+    const { authed } = this.state;
     return (
-      <div className="App">
-        <MyNavbar authed={authed}/>
-        {
-        (authed) ? (<div>You loggine in</div>) : (<Auth />)
-        }
-      </div>
+    <div className="App">
+      <MyNavbar authed={authed} />
+      {
+     this.renderView()
+      }
+    </div>
     );
   }
 }
