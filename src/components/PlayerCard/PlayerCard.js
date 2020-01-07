@@ -1,9 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import playerShape from '../../helpers/propz/playerShape';
+
 
 class PlayerCard extends React.Component {
   static propTypes = {
     players: playerShape.playerShape,
+    deleteAPlayer: PropTypes.func,
+  }
+
+  deleteAPlayer = (e) => {
+    e.preventDefault();
+    const { deleteSinglePlayer, player } = this.props;
+    deleteSinglePlayer(player.id);
   }
 
   render() {
@@ -17,7 +26,7 @@ class PlayerCard extends React.Component {
           <h5 className="card-title">{player.name}</h5>
           <p className="card-text">{player.position}</p>
           <div className="d-flex justify-content-between">
-          <button className="btn btn-outline-dark" >X</button>
+          <button className="btn btn-outline-dark" onClick={this.deleteAPlayer}>Delete</button>
           <button className="btn btn-outline-dark" >Edit</button>
           </div>
         </div>
