@@ -10,13 +10,11 @@ All you have to do is login using your Google account, and you'll be able to add
 
 ## Screenshots
 
-![Sports Roster Preview 1]()
+![Sports Roster Preview 1](https://raw.githubusercontent.com/jbkey2015/sports-roster/master/screenshots/Annotation%202020-01-08%20191717.png)
 
-![Sports Roster Preview 2]()
+![Sports Roster Preview 2](https://raw.githubusercontent.com/jbkey2015/sports-roster/master/screenshots/Annotation%202020-01-08%20191832.png)
 
-![Sports Roster Preview 3]()
-
-![Sports Roster Preview 4]()
+![Sports Roster Preview 3](https://raw.githubusercontent.com/jbkey2015/sports-roster/master/screenshots/Annotation%202020-01-08%20191916.png)
 
 
 ## How to run
