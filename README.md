@@ -1,3 +1,30 @@
+# Sports Roster
+
+## Technologies Used
+1. HTML5, SCSS, JavaScript
+2. Bootstrap & SASS 0.5.0: All customized styling
+3. React: For bundling components and building the UI
+
+## Description
+All you have to do is login using your Google account, and you'll be able to add, edit, and delete Players from your roster by simply adding the player name and image URL for each player.
+
+## Screenshots
+
+![Sports Roster Preview 1]()
+
+![Sports Roster Preview 2]()
+
+![Sports Roster Preview 3]()
+
+![Sports Roster Preview 4]()
+
+
+## How to run
+1. Clone down this project.
+2. Go to: `https://www.npmjs.com/package/http-server` and install "http-server".  
+2. Navigate to the project folder in command line interface and type: `http-server -p 8888`  
+3. This will show at: `http://localhost:8888` in your internet browser.  
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
